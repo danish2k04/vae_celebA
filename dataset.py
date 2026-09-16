@@ -5,12 +5,11 @@ from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
 from PIL import Image
 
-
 # 1. Transform images
 
 transform = transforms.Compose([
     transforms.Resize((64, 64)),
-    transforms.ToTensor(),
+    transforms.ToTensor()
 ])
 
 
@@ -83,4 +82,4 @@ if __name__ == "__main__":
     print("Batch shape:", images.shape)
     print("Minimum pixel value:", images.min())
     print("Maximum pixel value:", images.max())
-    print(dataset[10])
+
