@@ -1,5 +1,6 @@
 import torch
 import matplotlib.pyplot as plt
+import os
 
 from dataset import val_loader
 from model import VAE
@@ -67,5 +68,17 @@ for i, ax in enumerate(axes):
     )
     ax.axis("off")
 
+os.makedirs(
+    "results/interpolation",
+    exist_ok=True
+)
+
 plt.tight_layout()
+
+plt.savefig(
+    "results/interpolation/latent_interpolation.png",
+    dpi=150,
+    bbox_inches="tight"
+)
+
 plt.show()

@@ -1,5 +1,6 @@
 import torch
 import matplotlib.pyplot as plt
+import os
 
 # load loss histroy
 history = torch.load(
@@ -27,7 +28,17 @@ plt.xlabel("Epoch")
 plt.ylabel("Loss")
 plt.title("VAE Training and Validation Loss")
 
-plt.legend()
-plt.grid()
+os.makedirs(
+    "results/plots",
+    exist_ok=True
+)
+
+plt.tight_layout()
+
+plt.savefig(
+    "results/plots/loss_curve.png",
+    dpi=150,
+    bbox_inches="tight"
+)
 
 plt.show()

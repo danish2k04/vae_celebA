@@ -1,5 +1,6 @@
 import torch
 import matplotlib.pyplot as plt
+import os
 
 from model import VAE
 
@@ -51,5 +52,17 @@ for i, ax in enumerate(axes.flat):
     )
     ax.axis("off")
 
+os.makedirs(
+    "results/generated",
+    exist_ok=True
+)
+
 plt.tight_layout()
+
+plt.savefig(
+    "results/generated/generated_faces.png",
+    dpi=150,
+    bbox_inches="tight"
+)
+
 plt.show()

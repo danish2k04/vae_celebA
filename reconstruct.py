@@ -1,5 +1,6 @@
 import torch
 import matplotlib.pyplot as plt
+import os
 
 from dataset import val_loader
 from model import VAE
@@ -66,4 +67,15 @@ axes[1, 0].set_ylabel(
 )
 
 plt.tight_layout()
+
+os.makedirs(
+    "results/reconstructions",
+    exist_ok=True
+)
+
+plt.savefig(
+    "results/reconstructions/reconstruction.png",
+    dpi=150,
+    bbox_inches="tight"
+)
 plt.show()
