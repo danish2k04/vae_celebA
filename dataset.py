@@ -2,6 +2,7 @@ import os
 
 import torch
 from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import random_split
 from torchvision import transforms
 from PIL import Image
 
@@ -62,24 +63,47 @@ dataset = CelebADataset(
 )
 
 
-# 4. Create DataLoader
+# 4. Train / Validation split
+train_size = int(0.9 * len(dataset))
+val_size = len(dataset) - train_size
 
-loader = DataLoader(
+train_dataset, val_dataset = random_split(
     dataset,
+    [train_size, val_size],
+    generator=torch.Generator().manual_seed(42)
+)
+
+# 5. Create DataLoader
+
+
+train_loader = DataLoader(
+    train_dataset,
     batch_size=128,
     shuffle=True,
     num_workers=0
 )
 
+val_loader = DataLoader(
+    val_dataset, 
+    batch_size=128,
+    shuffle=False,
+    num_workers=0
+)
 
-# 5. Test the dataset
+
+# 6. Test the dataset
 
 if __name__ == "__main__":
 
-    images = next(iter(loader))
+    train_images = next(iter(train_loader))
+    val_images = next(iter(val_loader))
 
-    print("Number of images:", len(dataset))
-    print("Batch shape:", images.shape)
-    print("Minimum pixel value:", images.min())
-    print("Maximum pixel value:", images.max())
+    print("Total images:", len(dataset))
+    print("Training images:", len(train_dataset))
+    print("Validation images:", len(val_dataset))
 
+    print("Training batch shape:", train_images.shape)
+    print("Validation batch shape:", val_images.shape)
+
+    print("Minimum pixel value:", train_images.min())
+    print("Maximum pixel value:", train_images.max())
